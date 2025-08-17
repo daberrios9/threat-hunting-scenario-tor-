@@ -97,61 +97,70 @@ DeviceNetworkEvents
 
 ## Chronological Event Timeline 
 
-### 1. File Download - TOR Installer
+# Incident Timeline: Tor Browser Activity
 
-- **Timestamp:** `2024-11-08T22:14:48.6065231Z`
-- **Event:** The user "employee" downloaded a file named `tor-browser-windows-x86_64-portable-14.0.1.exe` to the Downloads folder.
-- **Action:** File download detected.
-- **File Path:** `C:\Users\employee\Downloads\tor-browser-windows-x86_64-portable-14.0.1.exe`
+## 1 — Tor Browser Installer Executed
+- **Timestamp:** 2025-08-04T22:53:18Z  
+- **Action:** Process execution (Tor Browser installer run)  
+- **Event:** User `cyberuser` executed the Tor Browser portable installer from the Downloads folder.  
+- **Command:** `tor-browser-windows-x86_64-portable-14.5.5.exe`  
+- **File Path:** `C:\Users\cyberuser\Downloads\`
 
-### 2. Process Execution - TOR Browser Installation
+---
 
-- **Timestamp:** `2024-11-08T22:16:47.4484567Z`
-- **Event:** The user "employee" executed the file `tor-browser-windows-x86_64-portable-14.0.1.exe` in silent mode, initiating a background installation of the TOR Browser.
-- **Action:** Process creation detected.
-- **Command:** `tor-browser-windows-x86_64-portable-14.0.1.exe /S`
-- **File Path:** `C:\Users\employee\Downloads\tor-browser-windows-x86_64-portable-14.0.1.exe`
+## 2 — Tor Files Placed on Desktop
+- **Timestamp:** 2025-08-04T22:54:02Z  
+- **Action:** File creation / modification (Tor-related files placed on desktop)  
+- **Event:** Tor-related files, including the Tor Browser components, were copied to the desktop under the `Tor Browser` folder.  
+- **Command:** `tor.exe`  
+- **File Path:** `C:\Users\cyberuser\Desktop\Tor Browser\Browser\Tor`
 
-### 3. Process Execution - TOR Browser Launch
+---
 
-- **Timestamp:** `2024-11-08T22:17:21.6357935Z`
-- **Event:** User "employee" opened the TOR browser. Subsequent processes associated with TOR browser, such as `firefox.exe` and `tor.exe`, were also created, indicating that the browser launched successfully.
-- **Action:** Process creation of TOR browser-related executables detected.
-- **File Path:** `C:\Users\employee\Desktop\Tor Browser\Browser\TorBrowser\Tor\tor.exe`
+## 3 — Suspicious File Created (tor-shopping-list.exe)
+- **Timestamp:** 2025-08-04T18:35:40.9993302Z  
+- **Action:** File creation (Suspicious executable created)  
+- **Event:** A file named `tor-shopping-list.exe` was created on the desktop, potentially unrelated to standard Tor installation.  
+- **Command:** `tor-shopping-list.exe`  
+- **File Path:** `C:\Users\cyberuser\Desktop\`
 
-### 4. Network Connection - TOR Network
+---
 
-- **Timestamp:** `2024-11-08T22:18:01.1246358Z`
-- **Event:** A network connection to IP `176.198.159.33` on port `9001` by user "employee" was established using `tor.exe`, confirming TOR browser network activity.
-- **Action:** Connection success.
-- **Process:** `tor.exe`
-- **File Path:** `c:\users\employee\desktop\tor browser\browser\torbrowser\tor\tor.exe`
+## 4 — Tor Browser Launched
+- **Timestamp:** 2025-08-05T02:53:51Z  
+- **Action:** Process execution (Tor Browser launched)  
+- **Event:** User `cyberuser` launched the Tor Browser executable (`firefox.exe`) from the desktop installation directory.  
+- **Command:** `firefox.exe`  
+- **File Path:** `C:\Users\cyberuser\Desktop\Tor Browser\Browser\`
 
-### 5. Additional Network Connections - TOR Browser Activity
+---
 
-- **Timestamps:**
-  - `2024-11-08T22:18:08Z` - Connected to `194.164.169.85` on port `443`.
-  - `2024-11-08T22:18:16Z` - Local connection to `127.0.0.1` on port `9150`.
-- **Event:** Additional TOR network connections were established, indicating ongoing activity by user "employee" through the TOR browser.
-- **Action:** Multiple successful connections detected.
+## 5 — Tor Local SOCKS Proxy Connection Established
+- **Timestamp:** 2025-08-05T02:54:26Z  
+- **Action:** Network connection (Tor local SOCKS proxy)  
+- **Event:** Tor Browser established a local SOCKS proxy connection to `127.0.0.1` on port `9150`.  
+- **Command:** `firefox.exe`  
+- **File Path:** `C:\Users\cyberuser\Desktop\Tor Browser\Browser\`
 
-### 6. File Creation - TOR Shopping List
+---
 
-- **Timestamp:** `2024-11-08T22:27:19.7259964Z`
-- **Event:** The user "employee" created a file named `tor-shopping-list.txt` on the desktop, potentially indicating a list or notes related to their TOR browser activities.
-- **Action:** File creation detected.
-- **File Path:** `C:\Users\employee\Desktop\tor-shopping-list.txt`
+📌 **Note:** This timeline captures the sequential forensic evidence of the Tor Browser's installation, launch, file generation, and SOCKS proxy network activity.
+
 
 ---
 
 ## Summary
 
-The user "employee" on the "threat-hunt-lab" device initiated and completed the installation of the TOR browser. They proceeded to launch the browser, establish connections within the TOR network, and created various files related to TOR on their desktop, including a file named `tor-shopping-list.txt`. This sequence of activities indicates that the user actively installed, configured, and used the TOR browser, likely for anonymous browsing purposes, with possible documentation in the form of the "shopping list" file.
+Between late evening on August 4 and early morning on August 5, 2025, the user cyberuser downloaded and executed the Tor Browser installer from their Downloads folder. Shortly after execution, system-level actions resulted in the creation and copying of multiple Tor-related files to the desktop, including a suspiciously named file tor-shopping-list.exe. A few hours later, the Tor
+Browser was launched, with associated processes (tor.exe, firefox.exe) starting. The browser established a local SOCKS proxy connection on port 9150.
+The sequence of events suggests that after installation, the Tor Browser was set up and actively launched, with at least one custom-named executable (tor-shopping-list.exe) appearing in the desktop environment during the process.
+
 
 ---
 
 ## Response Taken
 
-TOR usage was confirmed on the endpoint `threat-hunt-lab` by the user `employee`. The device was isolated, and the user's direct manager was notified.
+Upon identification of the suspicious Tor Browser installation and the creation of the file tor-shopping-list.exe, the affected endpoint was immediately isolated from the network to
+prevent further activity. The file and associated Tor installation directory were quarantined for forensic analysis, and the user account was temporarily disabled pending review. Indicators of compromise (IOCs) were documented, and endpoint security controls were updated to detect and block similar activity in the future.
 
 ---
