@@ -74,14 +74,6 @@ DeviceFileEvents
 
 ---
 
-
-## Validated By:
-- **Reviewer Name**: 
-- **Reviewer Contact**: 
-- **Validation Date**: 
-
----
-
 ## Additional Notes:
 - **None**
 
